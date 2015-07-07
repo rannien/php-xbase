@@ -8,7 +8,7 @@ class Table
     protected $avaliableColumns;
     protected $fp;
     protected $filePos = 0;
-    protected $recordPos = -1;
+    protected $recordPos = 0;
     protected $deleteCount = 0;
     protected $record;
 
@@ -79,7 +79,7 @@ class Table
 
         for ($i=0;$i<$fieldCount;$i++) {
             $column = new Column(
-                strtolower($this->readString(11)), // name
+                $this->readString(11), // name
                 $this->readByte(),      // type
                 $this->readInt(),       // memAddress
                 $this->readChar(),      // length
@@ -107,7 +107,7 @@ class Table
         }
 
         $b = $this->readByte();
-        $this->recordPos = -1;
+        $this->recordPos = 0;
         $this->record = false;
         $this->deleteCount = 0;
     }
@@ -126,9 +126,11 @@ class Table
         $valid = false;
 
         do {
-            if (($this->recordPos + 1) >= $this->recordCount) {
-                return false;   
-            }
+            // if (($this->recordPos + 1) >= $this->recordCount) {
+            //     print_r($this);
+            //     die("LOLO");
+            //     return false;   
+            // }
 
             $this->recordPos++;
             $this->record = new Record($this, $this->recordPos, $this->readBytes($this->recordByteLength));
