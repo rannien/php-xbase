@@ -5,14 +5,13 @@
     "description": "A simple parser for *.dbf files using PHP",
     "keywords": ["dbase", "foxpro"],
     "homepage": "https://github.com/hisamu/php-xbase",
-    "repositories": {
-        "hisamu/php-xbase": {
-            "vcs": {
-                "url" : "git@github.com:hisamu/php-xbase.git"
-            }
-        }
-    },
-    "authors" : [
+    "repositories": [
+      {
+        "type": "vcs",
+        "url" : "https://github.com/hisamu/php-xbase"
+      }
+    ],
+    "authors": [
         {
             "name": "Luã de Souza",
             "email": "lsouza@tapronto.com.br"
