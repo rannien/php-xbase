@@ -135,14 +135,15 @@ class WritableTable extends Table
         return $this->record;
     }
 
-    public function writeRecord()
+    public function writeRecord($disableWriteHeader = false)
     {
         fseek($this->fp, $this->headerLength+($this->record->getRecordIndex()*$this->recordByteLength));
         $data = $this->record->serializeRawData(); // removed referencing
+        
         fwrite($this->fp, $data);
-
-        if ($this->record->isInserted()) {
-            $this->writeHeader();
+        
+        if ($this->record->isInserted() && $disableWriteHeader === false) {
+             $this->writeHeader();
         }
 
         flush($this->fp);

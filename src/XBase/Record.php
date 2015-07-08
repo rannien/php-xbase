@@ -256,7 +256,11 @@ class Record
     }
     public function forceSetString($columnObj, $value)
     {
-        $this->choppedData[$columnObj->getName()] = str_pad(substr($value, 0, $columnObj->getDataLength()), $columnObj->getDataLength(), " ");
+        if ($columnObj->getType() == Record::DBFFIELD_TYPE_NUMERIC) {
+            $value = str_replace(',', '', $value);
+        }
+        
+        $this->choppedData[$columnObj->getName()] = str_pad(substr($value, 0, $columnObj->getDataLength()), $columnObj->getDataLength(), " ");        
     }
     public function setObjectByName($columnName, $value)
     {
@@ -311,7 +315,7 @@ class Record
     public function setBoolean($columnObj, $value)
     {
         if ($columnObj->getType() != self::DBFFIELD_TYPE_LOGICAL) {
-            trigger_error($columnObj->getName() . " is not a DateTime column", E_USER_ERROR);
+            trigger_error($columnObj->getName() . " is not a Boolean column", E_USER_ERROR);
         }
 
         switch (strtoupper($value)) {
@@ -362,6 +366,7 @@ class Record
             $this->forceSetString($columnObj, "");
             return;
         }
+        
         $value = str_replace(",", ".", $value);
         //$this->forceSetString($columnObj,intval($value));
 

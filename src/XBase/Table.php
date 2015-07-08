@@ -8,7 +8,7 @@ class Table
     protected $avaliableColumns;
     protected $fp;
     protected $filePos = 0;
-    protected $recordPos = 0;
+    protected $recordPos = -1;
     protected $deleteCount = 0;
     protected $record;
 
@@ -107,7 +107,7 @@ class Table
         }
 
         $b = $this->readByte();
-        $this->recordPos = 0;
+        $this->recordPos = -1;
         $this->record = false;
         $this->deleteCount = 0;
     }
@@ -128,7 +128,6 @@ class Table
         do {
             // if (($this->recordPos + 1) >= $this->recordCount) {
             //     print_r($this);
-            //     die("LOLO");
             //     return false;   
             // }
 
